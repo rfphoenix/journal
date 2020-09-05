@@ -24,7 +24,37 @@ class _HomeState extends State<Home> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter)),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Colors.lightGreen.shade800,
+              ),
+              onPressed: () {
+                // TODO: Add a signOut method
+              }),
+        ],
       ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 0.0,
+        child: Container(
+          height: 44.0,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.lightGreen.shade50, Colors.lightGreen],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+          tooltip: 'Add Journal Entry',
+          backgroundColor: Colors.lightGreen.shade300,
+          child: Icon(Icons.add),
+          onPressed: () async {
+            // TODO: Add _addOrEditJournal method
+          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

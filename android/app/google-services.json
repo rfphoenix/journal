@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1041754022239",
+    "firebase_url": "https://journal-1c8bb.firebaseio.com",
+    "project_id": "journal-1c8bb",
+    "storage_bucket": "journal-1c8bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041754022239:android:530de16eda3f019f0416ea",
+        "android_client_info": {
+          "package_name": "com.domainname.journal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041754022239-pqbs43301nuotlp0i0etje4nh6c7nevs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE_9L5H7vUcR4kl8CCkSNA4cRuHNwYH68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041754022239-pqbs43301nuotlp0i0etje4nh6c7nevs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1041754022239-70fk99s0c4385tuo980oktdfda2qdo5b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.domainname.journal"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

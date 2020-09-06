@@ -16,21 +16,24 @@ class AuthenticationService implements AuthenticationApi {
 
   @override
   Future<String> createUserWithEmailAndPassword(
-      {String email, String password}) {
-    // TODO: implement createUserWithEmailAndPassword
-    throw UnimplementedError();
+      {String email, String password}) async {
+    UserCredential user = await this
+        .getFirebaseAuth()
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    return user.user.uid;
   }
 
   @override
   Future<bool> isEmailVerified() async {
-    // TODO: implement isEmailVerified
-    throw UnimplementedError();
+    User user = await this.getFirebaseAuth().currentUser;
+    return user.emailVerified;
   }
 
   @override
   Future<void> sendEmailVerification() async {
-    // TODO: implement sendEmailVerification
-    throw UnimplementedError();
+    User user = await this.getFirebaseAuth().currentUser;
+    user.sendEmailVerification();
   }
 
   @override

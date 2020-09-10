@@ -125,17 +125,22 @@ class _LoginState extends State<Login> {
           stream: this._loginBloc.enableLoginCreateButton,
           builder: (BuildContext context, AsyncSnapshot snapshot) =>
               RaisedButton(
-            elevation: 16.0,
-            child: Text('Create Account'),
-            color: Colors.lightGreen.shade200,
-            disabledColor: Colors.grey.shade100,
-            onPressed: snapshot.data
-                ? () => this
-                    ._loginBloc
-                    .loginOrCreateButtonChanged
-                    .add('Create Account')
-                : null,
-          ),
+                  elevation: 16.0,
+                  child: Text('Create Account'),
+                  color: Colors.lightGreen.shade200,
+                  disabledColor: Colors.grey.shade100,
+                  onPressed: () {
+                    print('inside _buttonsCreateAccount()');
+                    print(snapshot.data);
+                    if (snapshot.data) {
+                      return this
+                          ._loginBloc
+                          .loginOrCreateChanged
+                          .add('Create Account');
+                    } else {
+                      return null;
+                    }
+                  }),
         ),
         FlatButton(
             onPressed: () {

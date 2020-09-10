@@ -21,8 +21,10 @@ class AuthenticationBloc {
   }
 
   void onAuthChanged() {
+    print('trying to authenticate....');
     this.authenticationApi.getFirebaseAuth().authStateChanges().listen((user) {
       final String uid = user != null ? user.uid : null;
+      print('$uid');
       addUser.add(uid);
     });
 

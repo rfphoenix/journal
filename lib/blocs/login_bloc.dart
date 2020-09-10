@@ -53,7 +53,10 @@ class LoginBloc with Validators {
   }
 
   void _startListenersIfEmailPasswordAreValid() {
+    print('inside _startListentersIfEmailPasswordAreValid()');
+
     email.listen((email) {
+      print('test 1234');
       this._email = email;
       this._emailValid = true;
       this._updateEnableLoginCreateButtonStream();
@@ -64,6 +67,7 @@ class LoginBloc with Validators {
     });
 
     password.listen((password) {
+      print('pass 1245');
       this._password = password;
       this._passwordValid = true;
       this._updateEnableLoginCreateButtonStream();
@@ -74,6 +78,7 @@ class LoginBloc with Validators {
     });
 
     loginOrCreate.listen((action) {
+      print('Inside loginOrCreate listener');
       action == 'Login' ? _logIn() : _createAccount();
     });
   }
@@ -107,6 +112,7 @@ class LoginBloc with Validators {
 
   Future<String> _createAccount() async {
     String result = '';
+    print('hitting _createAccount()');
     if (this._emailValid && this._passwordValid) {
       await this
           .authenticationApi

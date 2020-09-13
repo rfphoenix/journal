@@ -27,7 +27,11 @@ class JournalEditBloc {
   Sink<String> get saveJournalChanged => this._saveJournalController.sink;
   Stream<String> get saveJournal => this._saveJournalController.stream;
 
-  JournalEditBloc({this.add, this.selectedJournal, this.dbApi});
+  JournalEditBloc({this.add, this.selectedJournal, this.dbApi}) {
+    this
+        ._startEditListeners()
+        .then((finished) => this._getJournal(add, this.selectedJournal));
+  }
 
   void dispose() {
     this._dateController.close();
@@ -56,6 +60,7 @@ class JournalEditBloc {
 
   void _getJournal(bool add, Journal journal) {
     if (add) {
+      print('adding new journal...');
       this.selectedJournal = Journal();
       this.selectedJournal.date = DateTime.now().toString();
       this.selectedJournal.mood = 'Very Satisfied';

@@ -40,16 +40,14 @@ class DbFirestoreService implements DbApi {
 
   @override
   Stream<List<Journal>> getJournalList(String uid) {
-    return this
-        ._firestore
-        .collection(this._collectionJournals)
+    return _firestore
+        .collection(_collectionJournals)
         .where('uid', isEqualTo: uid)
         .snapshots()
         .map((QuerySnapshot snapshot) {
       List<Journal> journalDocs =
           snapshot.docs.map((doc) => Journal.fromDoc(doc)).toList();
       journalDocs.sort((comp1, comp2) => comp2.date.compareTo(comp1.date));
-
       return journalDocs;
     });
   }

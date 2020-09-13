@@ -77,6 +77,7 @@ class _HomeState extends State<Home> {
           } else if (snapshot.hasData) {
             return this._buildListViewSeparated(snapshot);
           } else {
+            print('Here to add journal...');
             return Center(
               child: Container(
                 child: Text('Add Journal'),
@@ -102,13 +103,99 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.lightGreen.shade300,
           child: Icon(Icons.add),
           onPressed: () async {
-            this._addOrEditJournal(add: true, journal: Journal(uid: _uid));
+            print('clicked add button...');
+            await this
+                ._addOrEditJournal(add: true, journal: Journal(uid: _uid));
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-  Widget _buildListViewSeparated(AsyncSnapshot snapshot) {}
+  Widget _buildListViewSeparated(AsyncSnapshot snapshot) {
+    return ListView.separated(
+        itemBuilder: (BuildContext context, int index) {
+          String titleDate = this
+              ._formatDates
+              .dateFormatShortMonthDayYear(snapshot.data[index].date);
+          String subtitle =
+              snapshot.data[index].mood + "\n" + snapshot.data[index].note;
+          return Dismissible(
+            key: Key(snapshot.data[index].documentID),
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(left: 16.0),
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+            ),
+            secondaryBackground: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.only(right: 16.0),
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+            ),
+            child: ListTile(
+              leading: Column(
+                children: <Widget>[
+                  Text(
+                    this
+                        ._formatDates
+                        .dateFormatDayNumber(snapshot.data[index].date),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32.0,
+                        color: Colors.lightGreen),
+                  ),
+                  Text(this
+                      ._formatDates
+                      .dateFormatShortDayName(snapshot.data[index].date)),
+                ],
+              ),
+              trailing: Transform(
+                transform: Matrix4.identity()
+                  ..rotateZ(this
+                      ._moodIcons
+                      .getMoodRotation(snapshot.data[index].mood)),
+                alignment: Alignment.center,
+                child: Icon(
+                  this._moodIcons.getMoodIcon(snapshot.data[index].mood),
+                  color:
+                      this._moodIcons.getMoodColor(snapshot.data[index].mood),
+                  size: 42.0,
+                ),
+              ),
+              title: Text(
+                titleDate,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(subtitle),
+              onTap: () {
+                this._addOrEditJournal(
+                  add: false,
+                  journal: snapshot.data[index],
+                );
+              },
+            ),
+            confirmDismiss: (direction) async {
+              bool confirmDelete = await this._confirmDeleteJournal();
+              if (confirmDelete) {
+                this._homeBloc.deleteJournal.add(snapshot.data[index]);
+              }
+            },
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider(
+            color: Colors.grey,
+          );
+        },
+        itemCount: snapshot.data.length);
+  }
 
   void _addOrEditJournal({bool add, Journal journal}) {
     Navigator.push(

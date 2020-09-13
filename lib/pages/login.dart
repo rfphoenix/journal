@@ -103,7 +103,7 @@ class _LoginState extends State<Login> {
             color: Colors.lightGreen.shade200,
             disabledColor: Colors.grey.shade100,
             onPressed: snapshot.data
-                ? () => this._loginBloc.loginOrCreateButtonChanged.add('Login')
+                ? () => this._loginBloc.loginOrCreateChanged.add('Login')
                 : null,
           ),
         ),
